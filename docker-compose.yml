@@ -1,0 +1,20 @@
+  version: '2.1'
+
+  services:
+    web:
+      build: ./apache-php7
+      ports:
+        - "80:80"
+      volumes:
+        - ./src:/var/www/html/
+      links:
+        - db
+    db:
+      image: mysql:latest
+      ports:
+        - "3306:3306"
+      volumes:
+        - ./mysql-data:/var/lib/mysql
+      environment:
+         MYSQL_DATABASE: mail
+         MYSQL_ROOT_PASSWORD: 1qaz2wsx
