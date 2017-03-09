@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\order;
+use App\Mail\SendToBuyer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -37,8 +38,9 @@ class MailController extends Controller
 	public function store(Request $request)
 	{
 //    	dd($request->user());
-		Mail::to($request->input('address'))->send(new order($request));
-		return back()->with('status', '發送成功');
+		Mail::to($request->input('store'))->send(new order($request));
+		Mail::to($request->input('email'))->send(new SendToBuyer($request));
+		return back()->with('status', '訂購成功，請前往信箱收信');
 	}
 
 	/**
